@@ -1,0 +1,41 @@
+
+Fast inference
+
+ vllm serve Qwen/Qwen3-VL-235B-A22B-Instruct \
+    --tensor-parallel-size 4 \
+    --enable-expert-parallel \
+    --mm-encoder-tp-mode data \
+    --gpu-memory-utilization 0.90 \
+    --async-scheduling \
+    --limit-mm-per-prompt.video 0 \
+    --skip-mm-profiling \
+    --max-model-len 128000
+
+
+
+vllm serve "Qwen/Qwen3-VL-235B-A22B-Instruct" \
+  --tensor-parallel-size 4 \
+  --enable-expert-parallel \
+  --mm-encoder-tp-mode data \
+  --gpu-memory-utilization 0.95 \
+  --max-model-len 16000 \
+  --max-num-seqs 64 \
+  --enable-prefix-caching \
+  --limit-mm-per-prompt.video 0 \
+  --trust-remote-code \
+  --skip-mm-profiling \
+  --mm-processor-cache-gb 0
+
+
+CUDA_VISIBLE_DEVICES=0
+vllm serve "Qwen/Qwen3-VL-30B-A3B-Instruct" \
+  --mm-encoder-tp-mode data \
+  --gpu-memory-utilization 0.95 \
+  --max-model-len 16000 \
+  --max-num-seqs 64 \
+  --enable-prefix-caching \
+  --limit-mm-per-prompt.video 0 \
+  --trust-remote-code \
+  --skip-mm-profiling
+
+Run on b200s
